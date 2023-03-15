@@ -17,12 +17,6 @@ function moveEgg() {
   if (position >= container.offsetWidth - egg.offsetWidth) {
     direction = -direction;
   }
-  // Add touch event listener for mobile devices
-  egg.addEventListener("touchstart", function (e) {
-    var touchX = e.touches[0].clientX - egg.clientWidth / 2;
-    var touchY = e.touches[0].clientY - egg.clientHeight / 2;
-    egg.style.transform = `translate(${touchX}px, ${touchY}px)`;
-  });
 }
 
 setInterval(moveEgg, 10);
@@ -49,6 +43,34 @@ document.addEventListener("keyup", function (event) {
   } else if (event.code === "Space") {
     setScore();
   }
+});
+
+// Touch events
+let touchStartX = null;
+let touchEndX = null;
+
+document.addEventListener("touchstart", function (event) {
+  touchStartX = event.touches[0].clientX;
+});
+
+document.addEventListener("touchmove", function (event) {
+  event.preventDefault();
+  touchEndX = event.touches[0].clientX;
+  let distance = touchStartX - touchEndX;
+  if (distance > 0 && position > 2) {
+    isMovingLeft = true;
+    isMovingRight = false;
+  } else if (distance < 0 && position < 390) {
+    isMovingRight = true;
+    isMovingLeft = false;
+  }
+});
+
+document.addEventListener("touchend", function (event) {
+  isMovingLeft = false;
+  isMovingRight = false;
+  touchStartX = null;
+  touchEndX = null;
 });
 
 function setScore() {
