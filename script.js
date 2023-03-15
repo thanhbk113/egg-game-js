@@ -12,18 +12,17 @@ function moveEgg() {
   } else if (isMovingRight && position < 390) {
     position += 5;
   }
+  egg.style.left = position + "px";
+
+  if (position >= container.offsetWidth - egg.offsetWidth) {
+    direction = -direction;
+  }
   // Add touch event listener for mobile devices
   egg.addEventListener("touchstart", function (e) {
     var touchX = e.touches[0].clientX - egg.clientWidth / 2;
     var touchY = e.touches[0].clientY - egg.clientHeight / 2;
     egg.style.transform = `translate(${touchX}px, ${touchY}px)`;
   });
-
-  egg.style.left = position + "px";
-
-  if (position >= container.offsetWidth - egg.offsetWidth) {
-    direction = -direction;
-  }
 }
 
 setInterval(moveEgg, 10);
