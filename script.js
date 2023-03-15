@@ -1,6 +1,7 @@
 const egg = document.getElementById("egg");
 const container = document.getElementById("container");
-egg.addEventListener("click", function () {
+egg.addEventListener("touchstart", function (event) {
+  event.preventDefault();
   jump();
 });
 
