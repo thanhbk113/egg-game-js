@@ -12,6 +12,12 @@ function moveEgg() {
   } else if (isMovingRight && position < 390) {
     position += 5;
   }
+  // Add touch event listener for mobile devices
+  egg.addEventListener("touchstart", function (e) {
+    var touchX = e.touches[0].clientX - egg.clientWidth / 2;
+    var touchY = e.touches[0].clientY - egg.clientHeight / 2;
+    egg.style.transform = `translate(${touchX}px, ${touchY}px)`;
+  });
 
   egg.style.left = position + "px";
 
