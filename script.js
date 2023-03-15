@@ -1,5 +1,8 @@
 const egg = document.getElementById("egg");
 const container = document.getElementById("container");
+egg.addEventListener("click", function () {
+  jump();
+});
 
 let position = container.offsetWidth / 2.5;
 let direction = 1;
@@ -29,6 +32,7 @@ document.addEventListener("keydown", function (event) {
   } else if (event.code === "ArrowUp") {
     jump();
   } else if (event.code === "Space") {
+    console.log("🚀 ~ event:", event);
     jump();
   }
 });
@@ -74,7 +78,6 @@ document.addEventListener("touchend", function (event) {
 });
 
 function setScore() {
-  console.log(document.querySelectorAll("#egg1").length);
   document.getElementById("score").innerHTML =
     document.querySelectorAll("#egg1").length + 1;
 }
