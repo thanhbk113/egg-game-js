@@ -1,9 +1,5 @@
 const egg = document.getElementById("egg");
 const container = document.getElementById("container");
-egg.addEventListener("touchstart", function (event) {
-  event.preventDefault();
-  jump();
-});
 
 let position = container.offsetWidth / 2.5;
 let direction = 1;
@@ -58,20 +54,58 @@ document.addEventListener("touchstart", function (event) {
   touchStartX = event.touches[0].clientX;
 });
 
-document.addEventListener("touchmove", function (event) {
+egg.addEventListener("touchmove", function (event) {
   event.preventDefault();
   touchEndX = event.touches[0].clientX;
   let distance = touchStartX - touchEndX;
   if (distance > 0 && position > 2) {
     isMovingLeft = true;
     isMovingRight = false;
+    if (Math.abs(distanceX) > Math.abs(distanceY)) {
+      // If it is, then it's a horizontal swipe
+      if (distanceX > 0) {
+        // Swipe right
+        console.log("Swipe right");
+      } else {
+        // Swipe left
+        console.log("Swipe left");
+      }
+    } else {
+      // If it's not a horizontal swipe, then it's a vertical swipe
+      if (distanceY > 0) {
+        // Swipe down
+        console.log("Swipe down");
+      } else {
+        // Swipe up
+        console.log("Swipe up");
+      }
+    }
   } else if (distance < 0 && position < 390) {
     isMovingRight = true;
     isMovingLeft = false;
   }
 });
 
-document.addEventListener("touchend", function (event) {
+egg.addEventListener("touchend", function (event) {
+  if (Math.abs(distanceX) > Math.abs(distanceY)) {
+    // If it is, then it's a horizontal swipe
+    if (distanceX > 0) {
+      // Swipe right
+      console.log("Swipe right");
+    } else {
+      // Swipe left
+      console.log("Swipe left");
+    }
+  } else {
+    // If it's not a horizontal swipe, then it's a vertical swipe
+    if (distanceY > 0) {
+      // Swipe down
+      console.log("Swipe down");
+    } else {
+      // Swipe up
+      jump();
+    }
+  }
   isMovingLeft = false;
   isMovingRight = false;
   touchStartX = null;
