@@ -53,6 +53,49 @@ document.addEventListener("keyup", function (event) {
 // Touch events
 let touchStartX = null;
 let touchEndX = null;
+let xDown = null;
+let yDown = null;
+
+document.addEventListener("touchstart", handleTouchStart, false);
+document.addEventListener("touchmove", handleTouchMove, false);
+
+function handleTouchStart(evt) {
+  xDown = evt.touches[0].clientX;
+  yDown = evt.touches[0].clientY;
+}
+
+function handleTouchMove(evt) {
+  if (!xDown || !yDown) {
+    return;
+  }
+
+  let xUp = evt.touches[0].clientX;
+  let yUp = evt.touches[0].clientY;
+
+  let xDiff = xDown - xUp;
+  let yDiff = yDown - yUp;
+
+  if (Math.abs(xDiff) > Math.abs(yDiff)) {
+    /*most significant*/
+    if (xDiff > 0) {
+      /* left swipe */
+      isMovingLeft = true;
+    } else {
+      /* right swipe */
+      isMovingRight = true;
+    }
+  } else {
+    if (yDiff > 0) {
+      /* up swipe */
+      jump();
+    } else {
+      /* down swipe */
+    }
+  }
+  /* reset values */
+  xDown = null;
+  yDown = null;
+}
 
 document.addEventListener("touchstart", function (event) {
   touchStartX = event.touches[0].clientX;
