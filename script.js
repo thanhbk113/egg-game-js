@@ -1,8 +1,30 @@
 const egg = document.getElementById("egg");
 const container = document.getElementById("container");
+const optionContainer = document.querySelector(".option-container");
+const timer = document.getElementById("timer");
+var timeleft = 30; // 30 seconds
+var level = 1;
+let normalbtn = document.querySelector(".normal-btn");
+let hardbtn = document.querySelector(".hard-btn");
+let btnplayagain = document.getElementsByClassName("playagain");
+let isPlaying = false;
+let isEndGame = false;
+let eggDied = 0;
 egg.addEventListener("touchstart", function (event) {
   event.preventDefault();
   jump();
+});
+
+normalbtn.addEventListener("click", function () {
+  playnormallevel();
+});
+
+hardbtn.addEventListener("click", function () {
+  playhardlevel();
+});
+
+btnplayagain[0].addEventListener("click", function () {
+  window.location.reload();
 });
 
 let position = container.offsetWidth / 2.5;
@@ -11,6 +33,7 @@ let isMovingLeft = false;
 let isMovingRight = false;
 
 function moveEgg() {
+  if (!isPlaying) return;
   if (isMovingLeft && position > 2) {
     position -= 5;
   } else if (isMovingRight && position < 390) {
@@ -33,7 +56,6 @@ document.addEventListener("keydown", function (event) {
   } else if (event.code === "ArrowUp") {
     jump();
   } else if (event.code === "Space") {
-    console.log("🚀 ~ event:", event);
     jump();
   }
 });
@@ -60,11 +82,13 @@ document.addEventListener("touchstart", handleTouchStart, false);
 document.addEventListener("touchmove", handleTouchMove, false);
 
 function handleTouchStart(evt) {
+  if (!isPlaying) return;
   xDown = evt.touches[0].clientX;
   yDown = evt.touches[0].clientY;
 }
 
 function handleTouchMove(evt) {
+  if (!isPlaying) return;
   if (!xDown || !yDown) {
     return;
   }
@@ -127,6 +151,7 @@ function setScore() {
 }
 
 function jump() {
+  if (!isPlaying) return;
   let jumpHeight = 100;
   let jumpDuration = 500;
 
@@ -182,6 +207,7 @@ function splitEgg() {
     newEgg1.style.animation = "disappear1 1s forwards";
     newEgg1.style.animation = "shake 1.5s ease-in-out forwards";
     newEgg1.src = "break-egg.gif";
+    eggDied++;
     setTimeout(function () {
       container.removeChild(newEgg1);
       setScore();
@@ -192,9 +218,40 @@ function splitEgg() {
     newEgg2.style.animation = "disappear 1s forwards";
     newEgg2.style.animation = "shake 1.5s ease-in-out forwards";
     newEgg2.src = "break-egg.gif";
+    eggDied++;
     setTimeout(function () {
       container.removeChild(newEgg2);
       setScore();
     }, 3000);
   });
+}
+
+function playhardlevel() {
+  isPlaying = true;
+  optionContainer.style.display = "none";
+  countdown();
+}
+
+function playnormallevel() {
+  isPlaying = true;
+  optionContainer.style.display = "none";
+  btnplayagain[0].style.display = "flex";
+}
+
+function countdown() {
+  var timerId = setInterval(function () {
+    timeleft--;
+    timer.innerHTML = timeleft + " giây còn lại";
+    if (timeleft <= 0) {
+      clearInterval(timerId);
+      timer.innerHTML = "Hết thời gian!";
+      container.style.display = "none";
+      setTimeout(function () {
+        timer.innerHTML = "Số chiến binh trứng bị tiêu diệt: " + eggDied;
+        btnplayagain[0].style.display = "flex";
+      }, 300);
+      isEndGame = true;
+      container.style.display = "none";
+    }
+  }, 1000);
 }

@@ -5,6 +5,29 @@
     border: 2px solid black;
     margin: 50px auto;
   }
+
+  .info-game {
+    text-align: center;
+  }
+
+  .container-again {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .playagain {
+  padding: 10px;
+  background: linear-gradient(90deg, #FFE27D 0%, #64E3FF 30%, #9192FF 85%);
+  background-size: 200% 100%;
+  border: none;
+	border-radius: 6px;
+  box-shadow: -2px -2px 10px rgba(255, 227, 126, 0.5), 2px 2px 10px rgba(144, 148, 255, 0.5);
+  color: #170F1E;
+  cursor: pointer;
+	font-family: 'Inter', sans-serif;
+  display: none;
+  }
   
   #egg1 {
     position: absolute;
@@ -35,6 +58,29 @@
     100% {
       transform: scale(1);
     }
+  }
+
+  .option-container {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   gap: 10px;
+  }
+
+  .option-container .button {
+    width: 100px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .button:hover {
+    background-color: #ddd;
   }
 
   @keyframes disappear {

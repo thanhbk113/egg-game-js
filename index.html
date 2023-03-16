@@ -6,11 +6,24 @@
   </head>
   <body>
     <div>
-<p>Chiến binh trứng trên sân: <span id="score">1</span></p>
-      <div id="container">
+      <div class="info-game">
+        <p>Chiến binh trứng trên sân: <span id="score">1</span></p>
+        <div id="timer"></div>
+      </div>
+      <div class="container-again">
+        <button class="playagain">Chơi lại</button>
+      </div>
+      <div id="container" class="endgame">
+        <div class="option-container">
+          <p>Chọn cấp độ</p>
+          <div class="option-button">
+            <button class="button normal-btn">Bình thường</button>
+            <button class="button hard-btn">Thử thách</button>
+          </div>
+        </div>
         <image id="egg" src="egg.gif" />
       </div>
       <script src="script.js"></script>
-    </body>
-  </div>
+    </div>
+  </body>
 </html>
