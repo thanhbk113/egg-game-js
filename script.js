@@ -224,6 +224,41 @@ function splitEgg() {
       setScore();
     }, 3000);
   });
+  // Randomly determine whether or not to create a boom egg
+  if (Math.random() < 0.5) {
+    // Create the boom egg
+    const boomEgg = document.createElement("img");
+    boomEgg.setAttribute("id", "egg1");
+    boomEgg.setAttribute("src", "boom.gif"); // Set the source of the boom egg image
+    boomEgg.style.width = halfWidth / 2 + "px";
+    boomEgg.style.height = halfHeight / 2 + "px";
+    container.appendChild(boomEgg);
+
+    // Set a random position for the boom egg
+    const containerRect = container.getBoundingClientRect();
+    const maxLeft = containerRect.width - newEgg1.offsetWidth;
+    const maxTop = containerRect.height - newEgg1.offsetHeight;
+    boomEgg.style.left = Math.floor(Math.random() * maxLeft) + "px";
+    boomEgg.style.top = Math.floor(Math.random() * maxTop) + "px";
+
+    // Add an event listener to handle clicks on the boom egg
+    boomEgg.addEventListener("click", function () {
+      boomEgg.src = "boomed.gif";
+      setTimeout(function () {
+        container.removeChild(boomEgg);
+      }, 300);
+      setTimeout(function () {
+        endGame();
+      }, 1000);
+    });
+  }
+}
+
+function endGame() {
+  timer.innerHTML = "Số chiến binh trứng bị tiêu diệt: " + eggDied;
+  btnplayagain[0].style.display = "flex";
+  container.style.display = "none";
+  timeleft = 0;
 }
 
 function playhardlevel() {
@@ -246,10 +281,8 @@ function countdown() {
       clearInterval(timerId);
       timer.innerHTML = "Hết thời gian!";
       container.style.display = "none";
-      setTimeout(function () {
-        timer.innerHTML = "Số chiến binh trứng bị tiêu diệt: " + eggDied;
-        btnplayagain[0].style.display = "flex";
-      }, 300);
+      timer.innerHTML = "Số chiến binh trứng bị tiêu diệt: " + eggDied;
+      btnplayagain[0].style.display = "flex";
       isEndGame = true;
       container.style.display = "none";
     }
