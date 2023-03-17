@@ -117,3 +117,8 @@
       transform:rotate(0deg) scale(0);
     }
   }
+
+  @keyframes fall {
+    from { top: 0; }
+    to { top: calc(100% - 50px); }
+  }
